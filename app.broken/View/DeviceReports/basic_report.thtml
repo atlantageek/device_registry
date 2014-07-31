@@ -1,0 +1,62 @@
+<h1>Basic Report</h1>
+<div id="tab2">
+<?php echo $this->renderElement('menu'); ?>
+</div>
+<?php
+?>
+<div class="body">
+<table border=1 cellspacing=0 cellpadding=0>
+<?php
+$this->Pagination->setPaging($paging);
+$th = array (
+   $this->Pagination->sortBy('id'),
+   $this->Pagination->sortBy('sn'),
+   $this->Pagination->sortBy('first_name'),
+   $this->Pagination->sortBy('last_name'),
+   $this->Pagination->sortBy('supervisor_name'),
+   $this->Pagination->sortBy('supervisor_phone'),
+   $this->Pagination->sortBy('garage'),
+   $this->Pagination->sortBy('city'),
+   $this->Pagination->sortBy('state'),
+   $this->Pagination->sortBy('service_date'),
+   $this->Pagination->sortBy('fw'),
+   $this->Pagination->sortBy('hw'),
+   $this->Pagination->sortBy('cal_date'),
+   $this->Pagination->sortBy('vz_id'),
+   $this->Pagination->sortBy('config_file'),
+   $this->Pagination->sortBy('ch_plan'),
+   $this->Pagination->sortBy('updated')
+);
+echo $this->Html->tableHeaders($th);
+?>
+<tbody>
+<?
+echo $this->renderElement('pagination',$paging); ?>
+<?php
+   $this->Pagination->setPaging($paging);
+   foreach($rec_list as $rec)
+   { 
+      echo "<tr><td>".
+      $rec['Device']['id'].'</td><td>'.
+      $rec['Device']['sn'].'</td><td>'.
+      $rec['Device']['first_name'].'</td><td>'.
+      $rec['Device']['last_name'].'</td><td>'.
+      $rec['Device']['supervisor_name'].'</td><td>'.
+      $rec['Device']['supervisor_phone'].'</td><td>'.
+      $rec['Device']['garage'].'</td><td>'.
+      $rec['Device']['city'].'</td><td>'.
+      $rec['Device']['state'].'</td><td style="white-space:nowrap">'.
+      $rec['Device']['service_date'].'</td><td>'.
+      $rec['Device']['fw'].'</td><td>'.
+      $rec['Device']['hw'].'</td><td style="white-space:nowrap">'.
+      $rec['Device']['cal_date'].'</td><td>'.
+      $rec['Device']['vz_id'].'</td><td>'.
+      $rec['Device']['config_file'].'</td><td>'.
+      $rec['Device']['ch_plan'].'</td><td>'.
+      $rec['Device']['updated'].'</td></tr>'."\n";
+   }
+ ?>
+ </tbody></table>
+<?
+echo $this->renderElement('pagination',$paging); ?>
+ </div>

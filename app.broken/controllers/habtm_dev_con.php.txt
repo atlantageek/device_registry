@@ -1,0 +1,217 @@
+<?php
+
+class DevicesController extends AppController
+{
+ var $scaffold;
+ var $uses=array('Device','DeviceException','VimgtConfigs','Option');
+ var $helpers=array('Html','javascript');
+ var $layout='device_scaffold';
+
+ function index()
+ {
+    $sortBy=empty($_GET['sortBy'])?'id.asc':$_GET['sortBy'];
+    $sortDtls=split('\.',$sortBy);
+       $sortBy=$sortDtls[0]." ".$sortDtls[1];
+    $directions=array(
+      'id'=>'asc',
+      'sn'=>'asc',
+      'first_name'=>'asc',
+      'last_name'=>'asc',
+      'supervisor_name'=>'asc',
+      'supervisor_phone'=>'asc',
+      'garage'=>'asc',
+      'city'=>'asc',
+      'state'=>'asc',
+      'service_date'=>'asc',
+      'fw'=>'asc',
+      'hw'=>'asc',
+      'cal_date'=>'asc',
+      'user_id'=>'asc',
+      'config_file'=>'asc',
+      'ch_plan'=>'asc',
+      'updated'=>'asc'
+    );
+
+    $dir=$sortDtls[1];
+    if (empty($dir)|| ($dir == 'asc'))
+    {
+       $sortDtls[1]='desc';
+    }
+    else
+    {
+       $sortDtls[1]='asc';
+    }
+   $directions[$sortDtls[0]]=$sortDtls[1];
+   $this->set('directions',$directions);
+   $rec_list=$this->Device->findAll(null,null,$sortBy);
+   $this->set('rec_list',$rec_list);
+   $this->render();
+ }
+ function unconnected_device_list()
+ {
+    $this->layout='main';
+   $data=$this->Device->findAll($criteria="last_connected is NULL");
+   $this->set('data',$data);
+   $this->render('device_list');
+      
+ }
+ function connected_device_list()
+ {
+    $this->layout='main';
+   $data=$this->Device->findAll($criteria="last_connected is not NULL");
+   $this->set('data',$data);
+   $this->render('device_list');
+ }
+ function device_list()
+ {
+    $this->layout='main';
+   $data=$this->Device->findAll();
+   $this->set('data',$data);
+ }
+ function register_device($id=NULL)
+ {
+    $ftp_dir=$this->VimgtConfigs->get_value('ftp_dir');
+    $this->layout='main';
+    $file_data_list=$this->_build_config_list();
+    $config_list=array();
+    foreach ($file_data_list as $data)
+    {
+       $config_list[$ftp_dir.$data[0]]=$data[0];
+    }
+    $this->set('config_list', $config_list);
+    if (empty($this->params['data']))#Go to blank form.
+    {
+       if (is_null($id))
+       {
+          $user=$this->Session->CakeSession->readSessionVar('user');
+          $result=$this->Device->findall("registered_by=\"$user\" and date_registered is not NULL",null,'date_registered DESC',1);
+          $this->params['data']=$result[0];
+          $this->params['data']['Device']['id']=null;
+          $this->params['data']['Device']['last_name']=null;
+          $this->params['data']['Device']['first_name']=null;
+          $this->params['data']['Device']['sn']=null;
+          $this->render();
+       }
+       else
+       {
+          $this->params['data']=
+            $this->Device->find("id=$id");
+          $this->render();
+       }
+    }
+    else #Has hit save button.
+    {
+       $sn=$this->params['data']['Device']['sn'];
+       $sn=trim($sn);
+       $rec=$this->Device->find("sn='$sn' and garage is not NULL");
+       if ($rec)
+       {
+          $this->params['data']['Device']['id']=$rec['Device']['id'];
+          $this->DeviceException->generate_exception('Device '.$sn.' has already been registered');
+       }
+       $rec=$this->Device->find("sn='$sn'");
+       if ($rec)
+       {
+          $this->params['data']['Device']['id']=$rec['Device']['id'];
+       }
+       $this->params['data']['Device']['date_registered']=date('Y-m-d H:i:s');
+       $user=$this->Session->CakeSession->readSessionVar('user');
+       $this->params['data']['Device']['registered_by']=$user;
+       if ($this->Device->save($this->params['data'],false))
+       {
+          $this->params['data']=array();
+          $this->redirect('devices/register_device');
+       }
+       else
+       {
+          $this->set('data',$this->params['data']);
+          $this->validateErrors($this->Device);
+          $this->render();
+       }
+    }
+ }
+ function _build_config_list()
+ {
+    vendor('filefind');
+    $ftp_dir=$this->VimgtConfigs->get_value('ftp_dir');
+    $ext=$this->VimgtConfigs->get_value('config_ext');
+    $ext=trim($ext);
+    $ext=ereg_replace('^\.','',$ext);
+    $file_data_list=array();
+    file_find($ftp_dir,$ext,$file_data_list, $ftp_dir);
+    return $file_data_list;
+    //Loop through stored system files.  
+    //If file exists in data_list then keep the id but delete from data_list. 
+    //If file does not exist in data_list then delete it from the database
+    //Otherwise delete kk
+    
+ }
+
+ function dev_checkin()
+ {
+    $this->layout='empty';
+    $sn=$this->params["form"]['sn'];
+    $rec=$this->Device->findBySn($sn);
+    $this->set('sn',$sn);
+    if ($rec)
+    {
+	    $this->Device->setId($rec['Device']['id']);
+       $device=$this->params['form'];
+       $device['last_connected']=date('Y-m-d H:i:s');
+       $options=array();
+       foreach ($this->params['form'] as $key=>$value)
+       {
+          if (preg_match('/^option\/(.*)/',$key,$matches))
+          {
+             $option=str_replace('_',' ',$matches[1]);
+             $option_rec=$this->Option->find('option_name="'.$option.'"',null,null,2);
+             echo "<pre> $option \n";
+             var_dump($option_rec);
+             echo "</pre>";
+             $option_rec['Device']['Device']=0+$rec['Device']['id'];
+             $link_rec['Device']=0+$rec['Device']['id'];
+             unset($device[$key]);
+	          $this->Option->setId($option_rec['Option']['id']);
+             $this->Option->save($link_rec);
+          }
+       }
+             echo "<pre>";
+             echo "</pre>";
+             #$device['Option']['Option']=$options;
+	    $this->Device->save($device);
+       $this->render('dev_checkin','empty');
+
+    }
+    else
+    {
+       $this->render('dev_error','empty');
+       #    	$this->Device->save($this->params['form']);
+    }
+ }
+ function config_file_list()
+ {
+    $this->layout='empty';
+    $sn=$this->params["form"]['sn'];
+    $rec=$this->Device->findBySn($sn);
+    $this->set('status',1);
+    if ($rec)
+    {
+       $this->set('status',1);
+	    $this->set('sn',trim($sn));
+	    $this->set('config1',$rec['Device']['config1']);
+	    $this->set('config2',$rec['Device']['config2']);
+	    $this->set('config3',$rec['Device']['config3']);
+	    $this->set('config4',$rec['Device']['config4']);
+    }
+    else
+    {
+       $this->set('status',0);
+	    $this->set('sn',trim($sn));
+       #    	$this->Device->save($this->params['form']);
+    }
+    $this->render('config_file_list','empty');
+    
+ }
+
+}
+?>

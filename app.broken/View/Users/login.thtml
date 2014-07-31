@@ -1,0 +1,9 @@
+<h1>Login</h1>
+<div class="body">
+<?php echo $this->Html->formTag('/users/login')?>
+<?php echo $this->Html->formTag('/users/login')?>
+User: <?php echo $this->Html->input('User/login');?><p>
+Password: <?php echo $this->Html->password('User/pwd');?><p>
+<?php echo $this->Html->submit('Login');?>
+</form>
+</div>

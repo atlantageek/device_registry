@@ -1,0 +1,123 @@
+#main {
+	border: 1px solid #666;
+	clear: both;
+	background: #FFF3B3;
+	padding-top: 2em;
+}
+
+#contents {
+	padding: 1.5em;
+	background: #FFFDF3;
+	min-height: 300px;
+}
+
+div.menu_list {
+	position: relative;
+	width: 100%;
+	height: 3em;
+	width: 75em; /* a width is required for Opera, older Mozilla browsers, and Konqueror browsers */
+}
+
+div.menu_list ul {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	bottom: -1px;
+	width: 75em; /* a width is required for Opera, older Mozilla browsers, and Konqueror browsers */
+}
+
+div.menu_list ul li  {
+	display: inline;
+	list-style: none;
+}
+
+div.menu_list ul li a {
+	width: 8.5em;
+	display: block;
+	float: left;
+	padding: 2px 0;
+	margin: 2px 2px 0 0;
+	text-align: center;
+	font-family: tahoma, verdana, sans-serif;
+	font-size: 120%;
+	text-decoration: none;
+	color: #333;
+}
+
+div.menu_list ul li a.current:hover {
+	border: 1px solid #666;
+	border-bottom: none;
+	background: #FFF3B3;
+	padding-bottom: 6px;
+	margin-top: 0;
+}
+
+div.menu_list ul a {
+	background: #FFFAE1;
+	border: 1px solid #AAA;
+	/*border-bottom: none;*/
+}
+
+div.menu_list ul a:hover {
+	margin-top: 0;
+	border-color: #666;
+	background: #FFF7CD;
+	padding-bottom: 5px;
+}
+
+div.menu_list ul ul {
+	position: absolute;
+   display: none;
+	margin: 0;
+	padding: 0;
+	bottom: -1.8em;
+	left: 1px;
+	width: 60em; /* a width is required for Opera, older Mozilla browsers, and Konqueror browsers */
+}
+
+div.menu_list ul ul li a {
+	width: auto;
+	display: block;
+	float: left;
+	padding: 0 10px;
+	margin: 0;
+	text-align: auto;
+	border: none;
+	border-right: 1px dotted #AAA;
+	background: none;
+
+}
+
+div.menu_list ul ul li a {
+	color: #06C;
+	text-decoration: underline;
+}
+
+div.menu_list ul ul li a:hover {
+	color: #333;
+	background: transparent;
+	padding: 0 10px;
+	border: none;
+	border-right: 1px dotted #AAA;
+}
+
+div.menu_list ul ul li a:active {
+	color: #000;
+	background: transparent;
+}
+
+div.menu_list ul ul li:last-child a { border: none; }
+
+div#tab0 li#tab0 a, div#tab1 li#tab1 a, div#tab2 li#tab2 a,div#tab3 li#tab2 a,div#tab4 li#tab2  a,div#tab5 li#tab2 a, div#tab7 li#tab7 a, div#tab8 li#tab7 a, div#tab9 li#tab7 a
+{
+   background-color:#ffffff;
+}
+div#tab0 li#tab0 ul, div#tab1 li#tab1 ul, div#tab2 li#tab2 ul,div#tab3 li#tab2 ul,div#tab4 li#tab2  ul,div#tab5 li#tab2 ul, div#tab6 li#tab6 ul, div#tab7 li#tab7 ul, div#tab8 li#tab7 ul, div#tab9 li#tab7 ul
+{
+  display:block;
+}
+div.body {
+   background-color: #FFF;
+   position:relative;
+   left:50px; top:40px;
+}

@@ -1,0 +1,54 @@
+<?php
+?>
+<div class="body">
+<table border=1 cellspacing=0 cellpadding=0>
+<thead>
+<tr>
+<th>Actions</th>
+<th><a href="?sortBy=id.<?php echo $directions['id']?>">ID</a></th>
+<th><a href="?sortBy=sn.<?php echo $directions['sn']?>">SN</a></th>
+<th><a href="?sortBy=first_name.<?php echo $directions['first_name']?>">First Name</a></th>
+<th><a href="?sortBy=last_name.<?php echo $directions['last_name']?>">Last Name</a></th>
+<th><a href="?sortBy=garage.<?php echo $directions['garage']?>">Garage</a></th>
+<th><a href="?sortBy=city.<?php echo $directions['city']?>">City</a></th>
+<th><a href="?sortBy=state.<?php echo $directions['state']?>">State</a></th>
+<th><a href="?sortBy=service_date.<?php echo $directions['service_date']?>">Service Date</a></th>
+<th><a href="?sortBy=fw.<?php echo $directions['fw']?>">FW</a></th>
+<th><a href="?sortBy=hw.<?php echo $directions['hw']?>">HW</a></th>
+<th><a href="?sortBy=cal_date.<?php echo $directions['cal_date']?>">Calibration Date</a></th>
+<th><a href="?sortBy=vz_id.<?php echo $directions['vz_id']?>">VZID</a></th>
+<th><a href="?sortBy=config_file.<?php echo $directions['config_file']?>">Config File</a></th> 
+<th><a href="?sortBy=ch_plan.<?php echo $directions['ch_plan']?>">Ch Plan</a></th>
+<th><a href="?sortBy=updated.<?php echo $directions['updated']?>">Updated</a></th>
+</tr>
+</thead>
+<tbody>
+<?php
+   foreach($rec_list as $rec)
+   { 
+      echo "<tr>".
+      '<td class="listactions"> <div style="width:12em">'.
+        '<a href="/device_registry/devices/show/'.$rec['Device']['id'].'/" >View</a>' .
+        '<a href="/device_registry/devices/edit/'.$rec['Device']['id'].'/" >Edit</a>'.
+        '<a href="/device_registry/devices/delete/'.$rec['Device']['id'].'/" >Delete</a>'.
+        '</div></td>'.
+      "<td>".
+      $rec['Device']['id'].'</td><td>'.
+      $rec['Device']['sn'].'</td><td>'.
+      $rec['Device']['first_name'].'</td><td>'.
+      $rec['Device']['last_name'].'</td><td>'.
+      $rec['Device']['garage'].'</td><td>'.
+      $rec['Device']['city'].'</td><td>'.
+      $rec['Device']['state'].'</td><td style="white-space:nowrap">'.
+      $rec['Device']['service_date'].'</td><td>'.
+      $rec['Device']['fw'].'</td><td>'.
+      $rec['Device']['hw'].'</td><td style="white-space:nowrap">'.
+      $rec['Device']['cal_date'].'</td><td>'.
+      $rec['Device']['vz_id'].'</td><td>'.
+      $rec['Device']['config_file'].'</td><td>'.
+      $rec['Device']['ch_plan'].'</td><td>'.
+      $rec['Device']['updated'].'</td></tr>'."\n";
+   }
+ ?>
+ </tbody></table>
+ </div>

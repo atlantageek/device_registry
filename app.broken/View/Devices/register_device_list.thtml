@@ -1,0 +1,25 @@
+<h1>Unconnected Device List </h1>
+<div id="tab1a"><?php echo $this->renderElement('menu'); ?></div>
+     <div class="body"> <br>
+     <br>
+<table style="width:600px;">
+<tr><th>Serial Number</th><th>Last Changed</th><th>Actions</th></tr>
+<?php
+   $i=0;
+   foreach ($data as $rec)
+   {
+     if ($i % 2) 
+     {$rowclass='class=altrow';}
+     else
+     {$rowclass='';}
+     echo "<tr $rowclass>".
+       '</td><td>'.$rec['Device']['sn'].
+       '</td><td>'.$rec['Device']['updated'].
+       '</td><td class="listactions">' .
+        $this->Html->link('Register Device','register_device/'.$rec['Device']['id']).
+       '</td></tr>';
+     $i++;
+   }
+?>
+</table>
+</div>

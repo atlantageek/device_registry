@@ -1,0 +1,34 @@
+.menu_list ul {
+   color: #ffff00;
+   font: bold 20px verdana, arial, sans-serif;
+   list-style-type: none;
+   margin: 0;
+   background-color: #eeeeee;
+}
+.menu_list li {
+   float: left;
+   background-color: #dddddd;
+   margin: 2px 2px 0 2px;
+   border: 1px solid #444444;
+   color: #888888;
+   padding: 5px 0px;
+   display: inline;
+}
+div.body {
+   border: 10px solid #000000;
+   background-color: #dddddd;
+}
+.menu_list a {
+   padding: 5px 10px;
+   text-decoration: none;
+   color: #888888;
+
+}
+.menu_list a:hover {
+   background-color: #fff;
+   padding: 5px 10px;
+}
+div#tab0 li#tab0 a, div#tab1 li#tab1 a, div#tab2 li#tab2,div#tab3 li#tab3,div#tab4 li#tab4 ,div#tab5 li#tab5
+{
+   background-color:#ffffff;
+}

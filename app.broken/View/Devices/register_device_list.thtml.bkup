@@ -1,0 +1,21 @@
+<h1>Register Device List </h1>
+<div id="tab1">
+<?php echo $this->renderElement('menu'); ?>
+   <div style="position:relative; left:50px">
+<table style="width:500px;">
+<tr><th>Serial Number</th><th>Last Changed</th><th>Actions</th></tr>
+<?php
+   foreach ($data as $rec)
+   {
+     echo "<tr>".
+       '</td><td>'.$rec['Device']['serial_nbr'].
+       '</td><td>'.$rec['Device']['last_changed'].
+       '</td><td><form action='.
+        $html->url('register_device/'.$rec['Device']['id']). ' method="get">'.
+        $html->submit("Register Device") .
+       '</form>'.
+       '</td></tr>';
+   }
+?>
+</table>
+</div>

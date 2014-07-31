@@ -1,0 +1,17 @@
+<h1>Register Device</h1>
+<div id="tab5">
+<?php echo $this->renderElement('menu'); ?>
+</div>
+<div class="body">
+<?php echo $this->Html->formTag('query_admin')?>
+   <div style="width:400">
+   <table>
+<?php echo $this->Html->input('Query/id',array('type'=>'hidden'));?>
+<tr><td>Title:</td><td class="position:relative;align:left"><?php echo $this->Html->input('Query/title',array('size'=>'20','MAXLENGTH'=>'20'));?></td></tr>
+<tr><td>Query:</td>
+   <td><?php echo $this->Html->textarea('Query/query',array('cols'=>'50','rows'=>'12'));?></td></tr>
+
+<tr><td><?php echo $this->Html->submit('Save');?></td><td></td></tr>
+   </div>
+</form>
+</div>

@@ -1,0 +1,12 @@
+<h1>Home</h1>
+<div id="tab0">
+<?php echo  $this->renderElement('menu'); $this->uses=array('Device')?>
+</div>
+<p>
+<p>
+<p>
+<p>
+<div style="position:relative; left:70px; top:40px">
+<H1>Verizon Inventory Management system </h1>
+<H2>Unregistered Devices:</h2><?php echo $this->Device->findCount('location_garage is NULL'); ?>
+</div>

@@ -1,0 +1,10 @@
+<h1>Status</h1>
+<div id="tab0">
+<?php echo  $this->renderElement('menu'); $this->uses=array('Device')?>
+</div>
+<div class="body">
+<H1>Verizon Inventory Management system </h1>
+<b>Unconnected Devices:</b><?php echo $this->Html->link($unconnected_devices,'/devices/unconnected_device_list');?><br><br>
+<b>Connected Devices:</b><?php echo $this->Html->link($connected_devices,'/devices/connected_device_list') ; ?><br><br>
+<b>All Devices:</b><?php echo $this->Html->link($total_devices,'/devices/device_list') ; ?><br><br>
+</div>
