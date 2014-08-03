@@ -1,13 +1,76 @@
-<html>
-<head>
-<title> VIMgt : <?php echo $title_for_layout;?></title>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-</head>
-<body>
-<div style="display:block;float:none;padding:0px 20px 0px 20px;height:15px;width:1000px;background:#db8101;color:#f0f0f0;font-weight:bolder;">Page Last Loaded: <?php echo date(DATE_RFC822); ?></div>
-</div>
-<div class="content" >
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Navbar Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/jquery.dataTables.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/navbar.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery.dataTables.js"></script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Verizon Asset Manager</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="/device_reports"><a href="#">Home</a></li>
+            <li><a href="/devices/register_device">Register Devices</a></li>
+            <li><a href="/devices/device_list">Device List</a></li>
+	    <li><a href="#contact">Reports</a></li>
+	    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#contact">Admin  <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                  <li><a href="/devices">Devices</a></li>
+                  <li><a href="/users">Users</a></li>
+                  <li><a href="/admin/registry_list">Config File Setup</a></li>
+	    </ul>
+            </li>
+            <li><a href="#contact">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+<p>
+    <div class="container">
+
+      <div class="starter-template">
 <?php echo $this->fetch('content');?>
-</div>
-</body>
+      </div>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
 </html>
+

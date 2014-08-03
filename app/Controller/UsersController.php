@@ -16,7 +16,6 @@ class UsersController extends AppController
     else #Has hit login button.
     {
 	    $login=$this->request->data['User']['login'];
-	    echo $this->request->data['User']['pwd'];
        $pwd = $this->request->data['User']['pwd'];
        //$pwd=$this->request->params['data']['User']['pwd'];
        $rec=$this->User->findByLoginAndPwd($login, $pwd);

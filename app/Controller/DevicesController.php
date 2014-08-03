@@ -6,21 +6,24 @@ class DevicesController extends AppController
  var $uses=array('Device','DeviceException','VimgtConfig','Option');
  var $helpers=array('Html','Form');
  var $layout='device_scaffold';
- var $components=array('Session');
+ var $components=array('Session', 'DataTable');
    
 //ToDo Fix Sorting
  function index()
  {
-   $rec_list=$this->Device->findAll();
-   $this->set('rec_list',$rec_list);
-   $this->render();
+   $this->layout='main';
+   $this->paginate = array(
+	   'fields' => array('Device.id','Device.sn','Device.first_name'));
+   $this->set('response', $this->DataTable->getResponse());
+   $this->set('_serialize', response);
+   #$rec_list=$this->Device->find('all');
+   #$this->set('rec_list',$rec_list);
+   #$this->render();
  }
  function unconnected_device_list()
  {
    $this->layout='main';
-   $criteria="last_connected is NULL";
-   list($order,$limit,$page) = $this->Pagination->init($criteria);
-   $data=$this->Device->findAll($criteria,NULL,$order, $limit, $page);
+   $data=$this->Device->find('all', array("last_connected" => null));
    $this->set('data',$data);
    $this->set('dscr','Unconnected Devices');
    $this->render('device_list');
@@ -29,9 +32,7 @@ class DevicesController extends AppController
  function connected_device_list()
  {
    $this->layout='main';
-   $criteria="last_connected is not NULL";
-   list($order,$limit,$page) = $this->Pagination->init($criteria);
-   $data=$this->Device->findAll($criteria,NULL,$order, $limit, $page);
+   $data=$this->Device->find('all', array("NOT" => array("last_connected" => null)));
    $this->set('data',$data);
    $this->set('dscr','Connected Devices');
    $this->render('device_list');
@@ -45,8 +46,8 @@ class DevicesController extends AppController
       $conditions="sn like \"$snlike\"";
    }
    $this->layout='main';
-   list($order,$limit,$page) = $this->Pagination->init($conditions);
-   $data=$this->Device->findAll($conditions,NULL,$order, $limit, $page);
+   //list($order,$limit,$page) = $this->Pagination->init($conditions);
+   $data=$this->Device->find("all", array('conditions' => $conditions));//,NULL);,$order, $limit, $page);
    $this->set('dscr','All Devices');
    $this->set('data',$data);
  }
@@ -60,8 +61,8 @@ class DevicesController extends AppController
  function register_device($id=NULL)
  {
 	 
-    #$ftp_dir=$this->VimgtConfig->get_value('ftp_dir');
     $this->layout='main';
+    $ftp_dir=$this->VimgtConfig->get_value('ftp_dir');
     $file_data_list=$this->_build_config_list();
     $config_list=array();
     foreach ($file_data_list as $data)
@@ -69,7 +70,7 @@ class DevicesController extends AppController
        $config_list[$data[0]]=$data[0];
     }
     $this->set('config_list', $config_list);
-    if (empty($this->request->params['data']))#Go to blank form.
+    if (empty($this->request->data))#Go to blank form.
     {
        if (is_null($id))
        {
@@ -78,42 +79,37 @@ class DevicesController extends AppController
 //"registered_by=\"$user\" and date_registered is not NULL",null,'date_registered DESC',1);
           if ($result)
           {
-          $this->request->params['data']=$result[0];
-          $this->request->params['data']['Device']['id']=null;
-          $this->request->params['data']['Device']['last_name']=null;
-          $this->request->params['data']['Device']['first_name']=null;
-          $this->request->params['data']['Device']['sn']=null;
+          $this->request->data=$result[0];
           $this->render();
           }
        }
        else
        {
-          $this->request->params['data']=
-            $this->Device->find("id=$id");
+	  $this->request->data = $this->Device->find("first", array('conditions' =>array("id"=>$id)));
           $this->render();
        }
     }
     else #Has hit save button.
     {
-       $sn=$this->request->params['data']['Device']['sn'];
+       $sn=$this->request->data['Device']['sn'];
        $sn=trim($sn);
-       $rec=$this->Device->find("sn='$sn'");
+       $rec=$this->Device->find("first", array('conditions' => array("sn='$sn'")));
        if ($rec)
        {
-          $this->request->params['data']['Device']['id']=$rec['Device']['id'];
+          $this->request->data['Device']['id']=$rec['Device']['id'];
        }
-       $this->request->params['data']['Device']['date_registered']=date('Y-m-d H:i:s');
-       $this->request->params['data']['Device']['service_date']=date('Y-m-d');
-       $user=$this->Session->CakeSession->readSessionVar('user');
-       $this->request->params['data']['Device']['registered_by']=$user;
-       if ($this->Device->save($this->request->params['data'],false))
+       $this->request->data['Device']['date_registered']=date('Y-m-d H:i:s');
+       $this->request->data['Device']['service_date']=date('Y-m-d');
+       $user=$this->Session->read('user');
+       $this->request->data['Device']['registered_by']=$user;
+       if ($this->Device->save($this->request->data,false))
        {
-          $this->request->params['data']=array();
-          $this->redirect('devices/register_device');
+          $this->request->data=array();
+          $this->redirect('/devices/register_device');
        }
        else
        {
-          $this->set('data',$this->request->params['data']);
+          $this->set('data',$this->request->data);
           $this->validateErrors($this->Device);
           $this->render();
        }
@@ -126,10 +122,8 @@ class DevicesController extends AppController
     $ext=trim($ext);
     $ext=ereg_replace('^\.','',$ext);
     $file_data_list=array();
-    Debugger::dump($ftp_dir);
     $handle = opendir($ftp_dir);
     while (false !== ($entry = readdir($handle))) {
-    Debugger::dump($entry);
         if (preg_match('/.*' . $ext . '/', $entry) == 1)
         {
 	    array_push($file_data_list, $entry);
