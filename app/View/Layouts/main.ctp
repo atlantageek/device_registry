@@ -42,9 +42,9 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="/device_reports"><a href="#">Home</a></li>
+            <li class="/device_reports"><a href="/devices/">Home</a></li>
             <li><a href="/devices/register_device">Register Devices</a></li>
-            <li><a href="/devices/device_list">Device List</a></li>
+            <li><a href="/devices/">Device List</a></li>
 	    <li><a href="#contact">Reports</a></li>
 	    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#contact">Admin  <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -53,7 +53,7 @@
                   <li><a href="/admin/registry_list">Config File Setup</a></li>
 	    </ul>
             </li>
-            <li><a href="#contact">Logout</a></li>
+            <li><a href="/">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

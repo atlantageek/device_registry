@@ -6,16 +6,19 @@ class DevicesController extends AppController
  var $uses=array('Device','DeviceException','VimgtConfig','Option');
  var $helpers=array('Html','Form');
  var $layout='device_scaffold';
- var $components=array('Session', 'DataTable');
+ var $components=array('Session', 'DataTable', 'RequestHandler');
    
-//ToDo Fix Sorting
  function index()
  {
    $this->layout='main';
    $this->paginate = array(
-	   'fields' => array('Device.id','Device.sn','Device.first_name'));
+	   'fields' => array('Device.id','Device.sn','Device.first_name','Device.last_name',
+      'Device.garage', 'Device.city', 'Device.state', 'Device.service_date', 'Device.fw',
+      'Device.hw', 'Device.cal_date', 'Device.vz_id', 'Device.config_file', 'Device.ch_plan',
+      'Device.updated'));
+   $this->DataTable->mDataProp = true;
    $this->set('response', $this->DataTable->getResponse());
-   $this->set('_serialize', response);
+   $this->set('_serialize', 'response');
    #$rec_list=$this->Device->find('all');
    #$this->set('rec_list',$rec_list);
    #$this->render();
@@ -23,19 +26,29 @@ class DevicesController extends AppController
  function unconnected_device_list()
  {
    $this->layout='main';
-   $data=$this->Device->find('all', array("last_connected" => null));
-   $this->set('data',$data);
-   $this->set('dscr','Unconnected Devices');
-   $this->render('device_list');
+   $this->paginate = array(
+     'conditions' => array(array('last_connected' => null)),
+     'fields' => array('Device.id','Device.sn','Device.first_name','Device.last_name',
+      'Device.garage', 'Device.city', 'Device.state', 'Device.service_date', 'Device.fw',
+      'Device.hw', 'Device.cal_date', 'Device.vz_id', 'Device.config_file', 'Device.ch_plan',
+      'Device.updated'));
+   $this->DataTable->mDataProp = true;
+   $this->set('response', $this->DataTable->getResponse());
+   $this->set('_serialize', 'response');
       
  }
  function connected_device_list()
  {
    $this->layout='main';
-   $data=$this->Device->find('all', array("NOT" => array("last_connected" => null)));
-   $this->set('data',$data);
-   $this->set('dscr','Connected Devices');
-   $this->render('device_list');
+   $this->paginate = array(
+     'conditions' => array(array("NOT" => array('last_connected' => null))),
+     'fields' => array('Device.id','Device.sn','Device.first_name','Device.last_name',
+      'Device.garage', 'Device.city', 'Device.state', 'Device.service_date', 'Device.fw',
+      'Device.hw', 'Device.cal_date', 'Device.vz_id', 'Device.config_file', 'Device.ch_plan',
+      'Device.updated'));
+   $this->DataTable->mDataProp = true;
+   $this->set('response', $this->DataTable->getResponse());
+   $this->set('_serialize', 'response');
  }
  function device_list()
  {
@@ -140,14 +153,16 @@ class DevicesController extends AppController
 
  function dev_checkin()
  {
-    $this->layout='empty';
-    $sn=$this->request->params["form"]['sn'];
+	 $this->layout='empty';
+	 Debugger::dump($this->request->data,9);
+    #$sn=$this->request->params["form"]['sn'];
+    $sn=$this->request->data['sn'];
     $rec=$this->Device->findBySn($sn);
     $this->set('sn',$sn);
     if ($rec)
     {
-	    $this->Device->setId($rec['Device']['id']);
-       $device=$this->request->params['form'];
+	    $this->Device->id = $rec['Device']['id'];
+       $device=$this->request->data;
        $device['last_connected']=date('Y-m-d H:i:s');
        $device['vz_id']=$device['user_id']; 
        $options=array();
@@ -190,6 +205,7 @@ class DevicesController extends AppController
     $this->set('status',1);
     $ftp_dir=$this->VimgtConfig->get_value('ftp_dir');
     $fs_prefix=$this->VimgtConfig->get_value('fs_prefix');
+    echo "BOB";
     if ($rec)
     {
        $this->set('status',1);

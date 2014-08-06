@@ -8,7 +8,7 @@ class UsersController extends AppController
  var $components=array('Session');
  function login()
  {
-    $this->layout='main';
+    $this->layout=false;
     if (empty($this->request->data))#Go to blank form.
     {
           $this->render();
