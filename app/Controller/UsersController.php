@@ -9,15 +9,17 @@ class UsersController extends AppController
  function login()
  {
     $this->layout=false;
-    if (empty($this->request->data))#Go to blank form.
+ $this->log('Got here', 'debug');
+    if (empty($this->request->query['data']))#Go to blank form.
     {
           $this->render();
+ $this->log('Got here2', 'debug');
     }
     else #Has hit login button.
     {
-	    $login=$this->request->data['User']['login'];
-       $pwd = $this->request->data['User']['pwd'];
-       //$pwd=$this->request->params['data']['User']['pwd'];
+ $this->log('Got here3', 'debug');
+	    $login=$this->request->query['data']['User']['login'];
+       $pwd = $this->request->query['data']['User']['pwd'];
        $rec=$this->User->findByLoginAndPwd($login, $pwd);
        if ($rec)
        {
