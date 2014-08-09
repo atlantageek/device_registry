@@ -34,6 +34,7 @@
   <body>
 
     <div class="container">
+      <center><img src="images/veex_login.png" style="height:100px"></center>
       <h3 style="text-align:center;">Verizon Asset Manager System</h3>
       <div class="login-well">
       <form action="/users/login" class="form-signin" role="form">
