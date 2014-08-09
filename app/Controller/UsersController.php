@@ -9,7 +9,6 @@ class UsersController extends AppController
  function login()
  {
     $this->layout=false;
- $this->log('Got here', 'debug');
     if (empty($this->request->query['data']))#Go to blank form.
     {
           $this->render();
@@ -17,7 +16,6 @@ class UsersController extends AppController
     }
     else #Has hit login button.
     {
- $this->log('Got here3', 'debug');
 	    $login=$this->request->query['data']['User']['login'];
        $pwd = $this->request->query['data']['User']['pwd'];
        $rec=$this->User->findByLoginAndPwd($login, $pwd);
@@ -41,3 +39,4 @@ class UsersController extends AppController
 }
 
 ?>
+

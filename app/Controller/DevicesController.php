@@ -7,11 +7,16 @@ class DevicesController extends AppController
  var $helpers=array('Html','Form');
  var $layout='device_scaffold';
  var $components=array('Session', 'DataTable', 'RequestHandler');
+function beforeFilter() {
+    // filter actions which should not output debug messages
+        Configure::write('debug', 0);
+}
    
  function index()
  {
    $this->layout='main';
    $this->paginate = array(
+           'limit' => 100,
 	   'fields' => array('Device.id','Device.sn','Device.first_name','Device.last_name',
       'Device.garage', 'Device.city', 'Device.state', 'Device.service_date', 'Device.fw',
       'Device.hw', 'Device.cal_date', 'Device.vz_id', 'Device.config_file', 'Device.ch_plan',
@@ -27,6 +32,7 @@ class DevicesController extends AppController
  {
    $this->layout='main';
    $this->paginate = array(
+           'limit' => 100,
      'conditions' => array(array('last_connected' => null)),
      'fields' => array('Device.id','Device.sn','Device.first_name','Device.last_name',
       'Device.garage', 'Device.city', 'Device.state', 'Device.service_date', 'Device.fw',
@@ -41,6 +47,7 @@ class DevicesController extends AppController
  {
    $this->layout='main';
    $this->paginate = array(
+           'limit' => 100,
      'conditions' => array(array("NOT" => array('last_connected' => null))),
      'fields' => array('Device.id','Device.sn','Device.first_name','Device.last_name',
       'Device.garage', 'Device.city', 'Device.state', 'Device.service_date', 'Device.fw',
