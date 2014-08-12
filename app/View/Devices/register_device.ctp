@@ -35,19 +35,19 @@
 </div>
 <div class="form-group">
 <label class="col-sm-2 control-label">Config File1</label>
-<?php echo $this->Form->selectTag('Device.config1',$config_list);?><p>
+<?php echo $this->Form->input('Device.config1',array('label'=> false, 'options'=>$config_list, 'selected' => $config1 ));?><p>
 </div>
 <div class="form-group">
 <label class="col-sm-2 control-label">Config File 2</label>
-<?php echo $this->Form->selectTag('Device.config2',$config_list);?><p>
+<?php echo $this->Form->input('Device.config2',array('label' => false,'options'=>$config_list, 'selected' => $config2));?><p>
 </div>
 <div class="form-group">
 <label class="col-sm-2 control-label">Config File 3</label>
-<?php echo $this->Form->selectTag('Device.config3',$config_list);?><p>
+<?php echo $this->Form->input('Device.config3',array('label' => false,'options'=>$config_list, 'selected' => $config3));?><p>
 </div>
 <div class="form-group">
 <label class="col-sm-2 control-label">Config File 4</label>
-<?php echo $this->Form->selectTag('Device.config4',$config_list);?><p>
+<?php echo $this->Form->input('Device.config4',array('label' => false,'options'=>$config_list, 'selected' => $config4));?><p>
 </div>
 <div class="form-group">
 <?php echo $this->Form->hidden('Device.id');?><p>

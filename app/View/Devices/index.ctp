@@ -21,7 +21,8 @@
         {mData:"Device.vz_id"},
         {mData:"Device.config_file"},
         {mData:"Device.ch_plan"},
-        {mData:"Device.updated"}
+        {mData:"Device.updated"},
+        {mRender: make_update_link}
     ],
 	    });
 	    $('#connected_table').dataTable({
@@ -68,7 +69,12 @@
         {mData:"Device.updated"}
     ],
 	    });
-    } );
+    } 
+);
+   make_update_link = function(obj,typ, src){
+	   result = '<a href="/devices/register_device/' + src.Device.id + "\">Edit</a>" ;// + obj.id
+	   return result;
+  }
 </script>
 <ul class="nav nav-tabs" role="tablist" id="myTab">
   <li><a href="#all" class="active" role="tab" data-toggle="tab">All Devices</a></li>
@@ -97,6 +103,7 @@
 <th>Config File</th>
 <th>Channel Plan</th>
 <th>Updated</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>

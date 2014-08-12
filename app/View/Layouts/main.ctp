@@ -39,7 +39,6 @@
             <li class="/device_reports"><a href="/devices/">Home</a></li>
             <li><a href="/devices/register_device">Register Devices</a></li>
             <li><a href="/devices/">Device List</a></li>
-	    <li><a href="#contact">Reports</a></li>
 	    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#contact">Admin  <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                   <li><a href="/devices">Devices</a></li>

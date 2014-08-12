@@ -87,7 +87,7 @@ function beforeFilter() {
     $config_list=array();
     foreach ($file_data_list as $data)
     {
-       $config_list[$data[0]]=$data[0];
+       $config_list["/" . $data]=$data;
     }
     $this->set('config_list', $config_list);
     if (empty($this->request->data))#Go to blank form.
@@ -106,6 +106,12 @@ function beforeFilter() {
        else
        {
 	  $this->request->data = $this->Device->find("first", array('conditions' =>array("id"=>$id)));
+	  $cfg1 = $this->request->data["Device"]["config1"];
+	  #$cfg1 = '/bob.pc7';
+          $this->set('config1',$cfg1);//$this->request->data["Device"]["config1"]);
+          $this->set('config1',$cfg2);//$this->request->data["Device"]["config2"]);
+          $this->set('config1',$cfg3);//$this->request->data["Device"]["config3"]);
+          $this->set('config1',$cfg4);//$this->request->data["Device"]["config4"]);
           $this->render();
        }
     }
@@ -212,7 +218,6 @@ function beforeFilter() {
     $this->set('status',1);
     $ftp_dir=$this->VimgtConfig->get_value('ftp_dir');
     $fs_prefix=$this->VimgtConfig->get_value('fs_prefix');
-    echo "BOB";
     if ($rec)
     {
        $this->set('status',1);
