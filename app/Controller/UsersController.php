@@ -31,7 +31,7 @@ class UsersController extends AppController
           {
              $this->Session->write('admin',0);
           }
-          $this->redirect(array('controller' => 'devices', 'action' => register_device));
+          $this->redirect(array('controller' => 'devices', 'action' => index));
 
        }
     }

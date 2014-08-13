@@ -22,7 +22,11 @@
         {mData:"Device.config_file"},
         {mData:"Device.ch_plan"},
         {mData:"Device.updated"},
+<?php if ($this->Session->read('admin') == 1): ?>
         {mRender: make_update_link}
+<?php else: ?>
+        {mRender: noop}
+<?php endif ?>
     ],
 	    });
 	    $('#connected_table').dataTable({
@@ -71,6 +75,7 @@
 	    });
     } 
 );
+   noop = function(obj,typ,src) { return "";}
    make_update_link = function(obj,typ, src){
 	   result = '<a href="/devices/register_device/' + src.Device.id + "\">Edit</a>" ;// + obj.id
 	   return result;

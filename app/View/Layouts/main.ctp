@@ -39,12 +39,14 @@
             <li class="/device_reports"><a href="/devices/">Home</a></li>
             <li><a href="/devices/register_device">Register Devices</a></li>
             <li><a href="/devices/">Device List</a></li>
+<?php if ($this->Session->read('admin') == 1): ?>
 	    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#contact">Admin  <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                   <li><a href="/devices">Devices</a></li>
                   <li><a href="/users">Users</a></li>
                   <li><a href="/admin/registry_list">Config File Setup</a></li>
 	    </ul>
+<?php endif ?>
             </li>
             <li><a href="/">Logout</a></li>
           </ul>
