@@ -23,7 +23,7 @@
         {mData:"Device.ch_plan"},
         {mData:"Device.updated"},
 <?php if ($this->Session->read('admin') == 1): ?>
-        {mRender: make_update_link}
+        {mRender: make_update_link, bSearchable: false, bSortable: false}
 <?php else: ?>
         {mRender: noop}
 <?php endif ?>
