@@ -59,6 +59,7 @@ function beforeFilter() {
  }
  function device_list()
  {
+   echo("HELLO");
    $conditions=NULL;
    if (!empty($this->request->params['data']['search']['sn']))#Go to blank form.
    {
