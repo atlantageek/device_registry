@@ -214,7 +214,9 @@ function beforeFilter() {
  function config_file_list()
  {
     $this->layout='empty';
-    $sn=$this->request->params["form"]['sn'];
+    $this->log("Trying");
+    $this->log($this->request->data);
+    $sn=$this->request->data['sn'];
     $rec=$this->Device->findBySn($sn);
     $this->set('status',1);
     $ftp_dir=$this->VimgtConfig->get_value('ftp_dir');

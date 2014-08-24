@@ -40,6 +40,7 @@
             <li><a href="/devices/register_device">Register Devices</a></li>
             <li><a href="/devices/">Device List</a></li>
             <li><a href="/device_report/query_list">Device Reports</a></li>
+            <li><a target="_blank" href="/phpmyadmin">Report Engine</a></li>
 <?php if ($this->Session->read('admin') == 1): ?>
 	    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#contact">Admin  <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
